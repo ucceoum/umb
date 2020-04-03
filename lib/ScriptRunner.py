@@ -21,6 +21,17 @@ class Runner :
         """
         self.main.page.runJavaScript(script)
 
+    def info_close_all(self) :
+        script = """
+        for(var i = 0; i < infowindowList.length; i++){
+            infowindowList[i].close();
+            tmp_list = new Array();
+            tmp_list.push(0);
+        }
+        """
+        self.main.page.runJavaScript(script)
+
+
 
     def search(self, search_text) :
         # search_text = self.lineEdit.text().strip()
@@ -340,7 +351,7 @@ class Runner :
                 color = {remainP.index(remain_stat)<=1 : 'success', remainP.index(remain_stat)==2 :'warning'}.get(True, 'danger')
             else :
                 color = 'danger'
-            
+
 
             script = """
 
@@ -358,7 +369,7 @@ class Runner :
 
             marker"""+str(code)+""".setMap(map);
 
-            var iwContent = '<div style="padding:5px;width:"""+str(width)+"""px; height:80px">"""+f"""<span class="btn btn-{color} " style="padding:0">{name}</span> <a href="https://map.kakao.com/link/to/"""+f'{name},{lat},{lng}'+f"""" class="btn btn-secondary" style="padding:0px;font-size:12px" target="_self">길찾기</a>  <br> <span style="font-size:8px;margin:0"> 갱신 : {created_at}</span> <br> <span style="font-size:8px"> 입고 : {stock_at}</span> </div>',
+            var iwContent = '<div style="padding:5px;width:"""+str(width)+"""px; height:72px;line-height:50%">"""+f"""<span class="btn btn-{color} " style="padding:0">{name}</span> <a href="https://map.kakao.com/link/to/"""+f'{name},{lat},{lng}'+f"""" class="btn btn-secondary" style="padding:0px;font-size:11px" target="_self">길찾기</a>  <br><br> <span style="font-size:8px;padding:0;margin:0"> 갱신 : {created_at} <br>  입고 : {stock_at}</span> </div>',
                     iwPosition = new kakao.maps.LatLng("""+str(lat)+""", """+str(lng)+"""); //인포윈도우 표시 위치입니다
 
 

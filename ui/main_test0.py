@@ -52,25 +52,57 @@ class Ui_MainWindow(object):
         self.intro_button.setGeometry(QtCore.QRect(0, 0, 920, 820))
         self.intro_button.setObjectName("intro_button")
 
+        # self.widget_main = QtWidgets.QWidget(self.intro_frame)
+        # self.widget_main.setGeometry(QtCore.QRect(20, 480, 420, 250))
+        # self.widget_main.setObjectName("widget_main")
+        # self.widget_1 = QtWidgets.QWidget(self.widget_main)
+        # self.widget_1.setGeometry(QtCore.QRect(0, 0, 210, 125))
+        # self.widget_1.setStyleSheet("background-color : #ff0000")
+        # self.widget_1.setObjectName("widget_1")
+        # self.widget_2 = QtWidgets.QWidget(self.widget_main)
+        # self.widget_2.setGeometry(QtCore.QRect(210, 0, 210, 125))
+        # self.widget_2.setStyleSheet("background-color : #0000ff")
+        # self.widget_2.setObjectName("widget_2")
+        # self.widget_3 = QtWidgets.QWidget(self.widget_main)
+        # self.widget_3.setGeometry(QtCore.QRect(0, 125, 210, 125))
+        # self.widget_3.setStyleSheet("background-color : #ff8c00")
+        # self.widget_3.setObjectName("widget_3")
+        # self.widget_4 = QtWidgets.QWidget(self.widget_main)
+        # self.widget_4.setGeometry(QtCore.QRect(210, 125, 210, 125))
+        # self.widget_4.setStyleSheet("background-color : #808080")
+        # self.widget_4.setObjectName("widget_4")
+
+
+
         self.widget_main = QtWidgets.QWidget(self.intro_frame)
         self.widget_main.setGeometry(QtCore.QRect(20, 480, 420, 250))
         self.widget_main.setObjectName("widget_main")
-        self.widget_1 = QtWidgets.QWidget(self.widget_main)
+        self.widget_1 = QtWidgets.QPushButton(self.widget_main)
         self.widget_1.setGeometry(QtCore.QRect(0, 0, 210, 125))
         self.widget_1.setStyleSheet("background-color : #ff0000")
         self.widget_1.setObjectName("widget_1")
-        self.widget_2 = QtWidgets.QWidget(self.widget_main)
+        self.widget_2 = QtWidgets.QPushButton(self.widget_main)
         self.widget_2.setGeometry(QtCore.QRect(210, 0, 210, 125))
         self.widget_2.setStyleSheet("background-color : #0000ff")
         self.widget_2.setObjectName("widget_2")
-        self.widget_3 = QtWidgets.QWidget(self.widget_main)
+        self.widget_3 = QtWidgets.QPushButton(self.widget_main)
         self.widget_3.setGeometry(QtCore.QRect(0, 125, 210, 125))
         self.widget_3.setStyleSheet("background-color : #ff8c00")
         self.widget_3.setObjectName("widget_3")
-        self.widget_4 = QtWidgets.QWidget(self.widget_main)
+        self.widget_4 = QtWidgets.QPushButton(self.widget_main)
         self.widget_4.setGeometry(QtCore.QRect(210, 125, 210, 125))
         self.widget_4.setStyleSheet("background-color : #808080")
         self.widget_4.setObjectName("widget_4")
+
+
+
+
+
+
+
+
+
+
 
 
         # self.listView_3 = QtWidgets.QListView(self.intro_frame)
@@ -132,11 +164,11 @@ class Ui_MainWindow(object):
         #stack1로 돌아가는 버튼
         self.pushButton__image = QtWidgets.QPushButton(self.frame)
         self.pushButton__image.setGeometry(QtCore.QRect(0, 0, 30, 30))
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("logo/umbrella.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton__image.setIcon(icon)
-        self.pushButton__image.setIconSize(QtCore.QSize(30, 30))
-        self.pushButton__image.setObjectName("pushButton__image")
+        # icon = QtGui.QIcon()
+        # icon.addPixmap(QtGui.QPixmap("logo/umbrella.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        # self.pushButton__image.setIcon(icon)
+        # self.pushButton__image.setIconSize(QtCore.QSize(30, 30))
+        # self.pushButton__image.setObjectName("pushButton__image")
 
         self.movie2=QMovie("logo/rolling_umb.gif")
         self.movie2.setScaledSize(QtCore.QSize(30,30))
@@ -193,6 +225,38 @@ class Ui_MainWindow(object):
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.radio1.setChecked(True)
+
+        #graph
+        self.page_3 = QtWidgets.QWidget()
+        self.page_3.setObjectName("page_3")
+
+
+        self.graph_frame = QtWidgets.QFrame(self.page_3)
+        self.graph_frame.setGeometry(QtCore.QRect(0, 0, 920, 820))
+        self.graph_frame.setStyleSheet("background-color : #ffffff")
+        self.graph_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.graph_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.graph_frame.setObjectName("intro_frame")
+        self.stackedWidget.addWidget(self.page_3)
+        #stack1로 돌아가는 버튼
+        self.pushButton__image2 = QtWidgets.QPushButton(self.graph_frame)
+        self.pushButton__image2.setGeometry(QtCore.QRect(0, 0, 30, 30))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("logo/umbrella.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton__image2.setIcon(icon)
+        self.pushButton__image2.setIconSize(QtCore.QSize(30, 30))
+        self.pushButton__image2.setObjectName("pushButton__image")
+
+        self.movie3=QMovie("logo/rolling_umb.gif")
+        self.movie3.setScaledSize(QtCore.QSize(30,30))
+        self.label_25 = QtWidgets.QLabel(self.pushButton__image2)
+        self.label_25.setGeometry(QtCore.QRect(0, 0, 30, 30))
+        self.label_25.setMovie(self.movie2)
+        self.label_25.setText("")
+        self.label_25.setObjectName("label_24")
+        self.movie3.start()
+
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
