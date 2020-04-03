@@ -106,9 +106,9 @@ class DataCollector :
         list_cri = soup.select("#content > div > div:nth-child(19) > table > tbody > tr > td:nth-child(4)")
         result = {}
         for i in range(len(list_title)) :
-            cf = ''.join(list(map(lambda x : x if x in ('0','1','2','3','4','5','6','7','8','9','(',')','-','.',',') else '',list(list_confirmed[i].text.strip()))))
-            dd = ''.join(list(map(lambda x : x if x in ('0','1','2','3','4','5','6','7','8','9','(',')','-','.',',') else '',list(list_dead[i].text.strip()))))
-            cr = ''.join(list(map(lambda x : x if x in ('0','1','2','3','4','5','6','7','8','9','(',')','-','.',',') else '',list(list_cri[i].text.strip()))))
+            cf = ''.join(list(map(lambda x : x if x.isnumeric() or x in ('(',')','-','.') else '',list(list_confirmed[i].text.strip()))))
+            dd = ''.join(list(map(lambda x : x if x.isnumeric() or x in ('(',')','-','.') else '',list(list_dead[i].text.strip()))))
+            cr = ''.join(list(map(lambda x : x if x.isnumeric() or x in ('(',')','-','.') else '',list(list_cri[i].text.strip()))))
             result[list_title[i].text.strip()] = [cf,dd,cr]
         return result
 
@@ -126,9 +126,9 @@ class DataCollector :
         list_cri = soup.select("#content > div > div:nth-child(16) > table > tbody > tr > td:nth-child(4)")
         result = {}
         for i in range(len(list_sex)) :
-            cf = ''.join(list(map(lambda x : x if x in ('0','1','2','3','4','5','6','7','8','9','(',')','-','.',',') else '',list(list_confirmed[i].text.strip()))))
-            dd = ''.join(list(map(lambda x : x if x in ('0','1','2','3','4','5','6','7','8','9','(',')','-','.',',') else '',list(list_dead[i].text.strip()))))
-            cr = ''.join(list(map(lambda x : x if x in ('0','1','2','3','4','5','6','7','8','9','(',')','-','.',',') else '',list(list_cri[i].text.strip()))))
+            cf = ''.join(list(map(lambda x : x if x.isnumeric() or x in ('(',')','-','.') else '',list(list_confirmed[i].text.strip()))))
+            dd = ''.join(list(map(lambda x : x if x.isnumeric() or x in ('(',')','-','.') else '',list(list_dead[i].text.strip()))))
+            cr = ''.join(list(map(lambda x : x if x.isnumeric() or x in ('(',')','-','.') else '',list(list_cri[i].text.strip()))))
             result[list_sex[i].text.strip()] = [cf,dd,cr]
         return result
 
@@ -136,7 +136,7 @@ class DataCollector :
 
 if __name__ == "__main__" :
     dc = DataCollector()
-    rs = dc.get_confirmed_by_sex()
+    rs = dc.get_confirmed_by_age()
     for i in rs :
         print(i, rs[i])
         print()
