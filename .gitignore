@@ -2,3 +2,4 @@ data/*
 *.cpython-36.pyc
 lib/__pycache__/*
 __pycache__/*
+aa.py

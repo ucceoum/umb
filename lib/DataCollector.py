@@ -41,7 +41,7 @@ class DataCollector :
         for i in range(len(result)-1, -1, -1) :
             if self.main.dataChecker > 0 :
                 if not result[i].get('remain_stat') in checkP or checkP.index(result[i].get('remain_stat')) <= self.main.dataChecker :
-                    print("데이터 제외, remain_stat :",result[i].get('remain_stat'))
+
                     result.pop(i)
                     continue
             if result[i].get('remain_stat') in remainP :
@@ -81,9 +81,6 @@ class DataCollector :
             list_data.append(i)
 
         return list_data
-        # print("완치자 : ",c,d)
-        # print("치료중 : ",e,f)
-        # print("사망자 : ",g,h)
 
     def intro_graph(self):
         # data=[]
@@ -126,7 +123,7 @@ class DataCollector :
             t.set_color("white")
             t.set_fontsize(10)
         plt.tight_layout()
-        plt.savefig("D:/umbrella/200330_pie_chart.svg")
+        plt.savefig("data/200330_pie_chart.svg")
         #위젯그래프에 그래프 표시하기
         canvas=FigureCanvas(fig)
         canvas.draw()
@@ -138,7 +135,7 @@ class DataCollector :
 
     def show_intro_list(self):
         data=self.A()
-        print("show_intro_list")
+        
         _translate = QtCore.QCoreApplication.translate
 
         self.main.patient = QtWidgets.QLabel(self.main.widget_1)

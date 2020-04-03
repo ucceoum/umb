@@ -89,7 +89,11 @@ class Umbrella(QMainWindow, Ui_MainWindow) :
             self.page.load(QUrl(self.url))
             return
         self.runner.map_removeMarkers()
-        lat, lng = self.runner.map_getCenter()
+        try :
+            lat, lng = self.runner.map_getCenter()
+        except :
+            print("mark_arount exception")
+            return
         data = self.dc.get_data_by_latlng(lat, lng, 1000)
         self.runner.marking(data)
         self.show_list(data)
@@ -135,9 +139,19 @@ class Umbrella(QMainWindow, Ui_MainWindow) :
             self.pushButton2.setText("지도 새로고침")
 
     def show_list(self, data) :
+        remainP = ['100개 이상', '30개 이상 100개 미만', '2개 이상 30개 미만','1개 이하', '판매중지']
         for i in range(len(data)) :
             item = QListWidgetItem(self.listWidget)
             row = Item(data[i])
+            rs = data[i].get('remain_stat')
+            if rs == None :
+                row.remain_stat.setStyleSheet('color:red')
+            elif remainP.index(rs) <= 1 :
+                row.remain_stat.setStyleSheet('color:green')
+            elif remainP.index(rs) == 2 :
+                row.remain_stat.setStyleSheet('color:orange')
+            else :
+                row.remain_stat.setStyleSheet('color:red')
             item.setWhatsThis(str(i))
             item.setSizeHint(row.sizeHint())
             self.listWidget.setItemWidget(item, row)

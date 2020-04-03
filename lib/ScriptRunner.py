@@ -17,6 +17,7 @@ class Runner :
         script = """
 
         infowindow"""+str(code)+""".open(map, marker"""+str(code)+""");
+        tmp_list.push("""+str(code)+""");
         """
         self.main.page.runJavaScript(script)
 
@@ -24,71 +25,81 @@ class Runner :
     def search(self, search_text) :
         # search_text = self.lineEdit.text().strip()
 
-        if True :
-            script = """
-            removeMarkers();
+        script = """
+        tmp_bool = false;
+
+
+
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        // 장소 검색 객체를 생성합니다
+        var ps = new kakao.maps.services.Places();
+
+        // 키워드로 장소를 검색합니다
+        ps.keywordSearch('"""+search_text+"""', placesSearchCB);
+
+
+
+        function placesSearchCB (data, status, pagination) {
+            if (status === kakao.maps.services.Status.OK) {
+
+                // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                // LatLngBounds 객체에 좌표를 추가합니다
+                var bounds = new kakao.maps.LatLngBounds();
+
+                for (var i=0; i<data.length; i++) {
+                    //displayMarker(data[i]);
+                    bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+                    tmp_bool = true;
+                }
+
+                // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                map.setBounds(bounds);
+            }
+        }
+
+
+        """
+        self.run(script)
+
+        script2 = """
+        if(tmp_bool === false){
+
             // 주소-좌표 변환 객체를 생성합니다
             var geocoder = new kakao.maps.services.Geocoder();
 
-            // 장소 검색 객체를 생성합니다
-            var ps = new kakao.maps.services.Places();
+            // 주소로 좌표를 검색합니다
+            geocoder.addressSearch('"""+search_text+"""', function(result, status) {
 
-            // 키워드로 장소를 검색합니다
-            ps.keywordSearch('"""+search_text+"""', placesSearchCB);
+                // 정상적으로 검색이 완료됐으면
+                 if (status === kakao.maps.services.Status.OK) {
 
-            function placesSearchCB (data, status, pagination) {
-                if (status === kakao.maps.services.Status.OK) {
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-                    // LatLngBounds 객체에 좌표를 추가합니다
-                    var bounds = new kakao.maps.LatLngBounds();
+                    // 결과값으로 받은 위치를 마커로 표시합니다
+                    /*var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords
+                    });
+                    //*** 마커 담기
+                    markerList.push(marker)*/
 
-                    for (var i=0; i<data.length; i++) {
-                        displayMarker(data[i]);
-                        bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+
+                    // 인포윈도우로 장소에 대한 설명을 표시합니다
+
+                    //infowindow.open(map, marker);
+
+                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                    map.setCenter(coords);
+                    if(map.getLevel() > 5){
+                        map.setLevel(4);
                     }
-
-                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-                    map.setBounds(bounds);
                 }
-            }
+            });
+        } """
 
-
-            """
-        # else:
-        #     script = """
-        #     removeMarkers();
-        #     // 주소-좌표 변환 객체를 생성합니다
-        #     var geocoder = new kakao.maps.services.Geocoder();
-        #
-        #     // 주소로 좌표를 검색합니다
-        #     geocoder.addressSearch('"""+search_text+"""', function(result, status) {
-        #
-        #         // 정상적으로 검색이 완료됐으면
-        #          if (status === kakao.maps.services.Status.OK) {
-        #
-        #             var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        #
-        #             // 결과값으로 받은 위치를 마커로 표시합니다
-        #             /*var marker = new kakao.maps.Marker({
-        #                 map: map,
-        #                 position: coords
-        #             });
-        #             //*** 마커 담기
-        #             markerList.push(marker)*/
-        #
-        #
-        #             // 인포윈도우로 장소에 대한 설명을 표시합니다
-        #
-        #             infowindow.open(map, marker);
-        #
-        #             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        #             map.setCenter(coords);
-        #         }
-        #     });    """
-
-        self.run(script)
-
+        self.run(script2)
 
 
     #거리 계산하는 메소드
@@ -121,9 +132,6 @@ class Runner :
         return '['+result_arr.toString()+']';
         """
         result = list(map(int, eval(self.run(script))))
-        print(result)
-        for i in result :
-            print(f"거리 : {i}m, type : {type(i)}")
 
         return result
 
@@ -144,8 +152,6 @@ class Runner :
         if not idx in (0,1,2,3,4) :
             idx = 0
         result = ""
-        print(lat)
-        print(lng)
         script = """
         go_py_result = '대기중'
         var coord = new kakao.maps.LatLng("""+str(lat)+""", """+str(lng)+""");
@@ -177,10 +183,10 @@ class Runner :
         for i in range(50) :
             result = self.run(script2)
             if result != "대기중" :
-                print("idx : ",idx,"c 2 a : ",result)
+
                 return result
                 break
-        print("idx : ",idx,"c 2 a : ",result)
+
         return ""
 
 
@@ -189,7 +195,7 @@ class Runner :
     #spring 컨트롤러 설정 필요
     def map_getCenter(self) :
         result = ""
-        # print("map_getcenter call")
+
         script ="""
         $.ajax({
             type : 'POST',
@@ -197,7 +203,7 @@ class Runner :
             data :{'center_lat' : map.getCenter().getLat(),'center_lng' : map.getCenter().getLng(), 'user_uuid' : '"""+str(self.main.user_uuid)+"""'}
         });
         """
-        # print("mpct run1")
+
         self.main.page.runJavaScript(script)
 
         script2="""
@@ -215,19 +221,17 @@ class Runner :
 
         });
         """
-        # print("mpct run2")
+
         self.main.browser.execute_script(script2)
-        for i in range(500) :
-        # run=True
-        # while run :
+
+        run=True
+        while run :
+            self.main.browser.execute_script(script2)
             result = self.main.browser.execute_script("return go_py_result2")
-            # print("getcenter.....result : ",result)
-            print("getcen,,,,,",result)
-            if result != "" :
+            if result != "" and result != None:
                 return result.split()[0], result.split()[1]
-                print("getcenter.....return : ",result.split()[0], result.split()[1])
-                # run=False
-        print("getcen,,,,,",result)
+                run=False
+
 
 
 
@@ -256,12 +260,14 @@ class Runner :
         script3 = """
         return go_py_result
         """
-        for i in range(500) :
+        # for i in range(500) :
+        while True :
+            self.main.browser.execute_script(script2)
             result = self.main.browser.execute_script(script3)
             if result != '' :
-                print(f"지도레벨 반환 :[{result}] ")
                 return result
-        # print("지도레벨 반환 : ",result)
+                break
+
         return result
 
     #지도 레벨 설정
@@ -270,12 +276,12 @@ class Runner :
         map.setLevel("""+str(level)+""")
         """
         level = self.run(script)
-        print(level)
+
         return level
 
     #마커 다 지우는 메소드
     def map_removeMarkers(self) :
-        print("mk remove")
+
         script = """
         removeMarkers();
         removeInfowindows();
@@ -285,7 +291,7 @@ class Runner :
 
     #맵 이동
     def setMap(self,lat, lng) :
-        self.map_setLevel(3)
+        #self.map_setLevel(3)
         script = """
         var umbrella_location = new kakao.maps.LatLng("""+str(lat)+""", """+str(lng)+""");
         map.setCenter(umbrella_location);
@@ -299,9 +305,7 @@ class Runner :
 
     #스크립트 실행
     def run(self, script) :
-        print("run runJavaScript")
         self.main.page.runJavaScript(script)
-        print("run execute_Script")
         result = self.main.browser.execute_script(script)
         return result
 
@@ -312,6 +316,8 @@ class Runner :
     def marking(self, data) :
         self.map_removeMarkers()
         typeP = ["","약국","우체국","농협"]
+        remainP = ['100개 이상', '30개 이상 100개 미만', '2개 이상 30개 미만','1개 이하', '판매중지']
+
         for item in data :
             addr = item.get('addr')
             code = item.get('code')
@@ -322,26 +328,43 @@ class Runner :
             remain_stat = item.get('remain_stat')
             stock_at = item.get('stock_at')
             type = typeP[int(item.get('type'))]
-            # print(f"addr = {addr}\ncode = {code}\ncreated_at = {created_at}\nlat = {lat}\nlng = {lng}\nname = {name}\nremain_stat = {remain_stat}\nstock_at = {stock_at}\ntype = {type}")
+            color = ""
+            width = 45
+            for i in name :
+                if i.isalpha() and not (i.isupper() or i.islower()) :
+                    width += 20
+                else :
+                    width += 10
+
+            if remain_stat in remainP :
+                color = {remainP.index(remain_stat)<=1 : 'success', remainP.index(remain_stat)==2 :'warning'}.get(True, 'danger')
+            else :
+                color = 'danger'
+            
 
             script = """
+
+            tmp_list = new Array();
+            tmp_list.push(0);
             var markerPosition  = new kakao.maps.LatLng("""+str(lat)+""", """+str(lng)+""");
 
             var marker"""+str(code)+""" = new kakao.maps.Marker({
                 position: markerPosition
             });
 
+
+
             markerList.push(marker"""+str(code)+""");
 
             marker"""+str(code)+""".setMap(map);
 
-            var iwContent = '<div style="padding:5px;">"""+f"{name}   ({remain_stat})"+""" <br><a href="https://map.kakao.com/link/map/Hello World!,"""+str(lat)+""","""+str(lng)+"""" style="color:blue" target="_self">큰지도보기</a> <a href="https://map.kakao.com/link/to/"""+f'{name},{lat},{lng}'+"""" style="color:blue" target="_self">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            var iwContent = '<div style="padding:5px;width:"""+str(width)+"""px; height:80px">"""+f"""<span class="btn btn-{color} " style="padding:0">{name}</span> <a href="https://map.kakao.com/link/to/"""+f'{name},{lat},{lng}'+f"""" class="btn btn-secondary" style="padding:0px;font-size:12px" target="_self">길찾기</a>  <br> <span style="font-size:8px;margin:0"> 갱신 : {created_at}</span> <br> <span style="font-size:8px"> 입고 : {stock_at}</span> </div>',
                     iwPosition = new kakao.maps.LatLng("""+str(lat)+""", """+str(lng)+"""); //인포윈도우 표시 위치입니다
 
 
             var infowindow"""+str(code)+""" = new kakao.maps.InfoWindow({
                 position : iwPosition,
-                removable : iwRemoveable,
+                //removable : iwRemoveable,
                 content : iwContent
             });
             infowindowList.push(infowindow"""+str(code)+""");
@@ -349,15 +372,30 @@ class Runner :
 
             kakao.maps.event.addListener(marker"""+str(code)+""", 'click', function() {
                   // 마커 위에 인포윈도우를 표시합니다
-                  infowindow"""+str(code)+""".open(map, marker"""+str(code)+""");
+                  if(!tmp_list.includes("""+str(code)+""")){
+                      infowindow"""+str(code)+""".open(map, marker"""+str(code)+""");
+                      tmp_list.push("""+str(code)+""");
+                  }else{
+                      infowindow"""+str(code)+""".close();
+                      tmp_list.splice(tmp_list.indexOf("""+str(code)+"""),tmp_list.indexOf("""+str(code)+"""));
+                  }
+
             });
 
+            kakao.maps.event.addListener(marker"""+str(code)+""", 'mouseover', function() {
+                infowindow"""+str(code)+""".open(map, marker"""+str(code)+""");
+            });
+            kakao.maps.event.addListener(marker"""+str(code)+""", 'mouseout', function() {
+                if(!tmp_list.includes("""+str(code)+""")){
+                    infowindow"""+str(code)+""".close();
+                }
 
+            });
 
             """
             self.run(script)
 
-
+# """++"""
 # if __name__ == "__main__" :
     # page = QWebEnginePage()
     # url = "http://localhost:8080/umbrella"

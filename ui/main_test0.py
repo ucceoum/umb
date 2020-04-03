@@ -82,7 +82,7 @@ class Ui_MainWindow(object):
         # self.pushButton_3.setGeometry(QtCore.QRect(170, 0, 601, 321))
         # icon = QtGui.QIcon()
         # icon.addPixmap(QtGui.QPixmap("D:/Umbrella/dahyoung/umbrella2/logo/rolling_umb.gif"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.movie=QMovie("D:/Umbrella3/umbrella/logo/rolling_umb.gif")
+        self.movie=QMovie("logo/rolling_umb.gif")
         self.movie.setScaledSize(QtCore.QSize(200,200))
         self.label_23 = QtWidgets.QLabel(self.pushButton_3)
         self.label_23.setGeometry(QtCore.QRect(20, 20, 200, 200))
@@ -97,7 +97,7 @@ class Ui_MainWindow(object):
         self.pushButton_4 = QtWidgets.QPushButton(self.intro_frame)
         self.pushButton_4.setGeometry(QtCore.QRect(400, 57, 400, 200))
         icon_text = QtGui.QIcon()
-        icon_text.addPixmap(QtGui.QPixmap("D:/Umbrella3/umbrella/logo/text1.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon_text.addPixmap(QtGui.QPixmap("logo/text1.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_4.setIcon(icon_text)
         self.pushButton_4.setIconSize(QtCore.QSize(400, 200))
         self.pushButton_4.setObjectName("pushButton_4")
@@ -105,7 +105,7 @@ class Ui_MainWindow(object):
         self.pushButton_5 = QtWidgets.QPushButton(self.intro_frame)
         self.pushButton_5.setGeometry(QtCore.QRect(420, 200, 350, 200))
         icon_text1 = QtGui.QIcon()
-        icon_text1.addPixmap(QtGui.QPixmap("D:/Umbrella3/umbrella/logo/mask2.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon_text1.addPixmap(QtGui.QPixmap("logo/mask2.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_5.setIcon(icon_text1)
         self.pushButton_5.setIconSize(QtCore.QSize(400, 200))
         self.pushButton_5.setObjectName("pushButton_5")
@@ -131,12 +131,25 @@ class Ui_MainWindow(object):
 
         #stack1로 돌아가는 버튼
         self.pushButton__image = QtWidgets.QPushButton(self.frame)
-        self.pushButton__image.setGeometry(QtCore.QRect(30, 30, 30, 30))
+        self.pushButton__image.setGeometry(QtCore.QRect(0, 0, 30, 30))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("D:/Umbrella3/umbrella/logo/umbrella.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("logo/umbrella.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton__image.setIcon(icon)
-        self.pushButton__image.setIconSize(QtCore.QSize(35, 35))
+        self.pushButton__image.setIconSize(QtCore.QSize(30, 30))
         self.pushButton__image.setObjectName("pushButton__image")
+
+        self.movie2=QMovie("logo/rolling_umb.gif")
+        self.movie2.setScaledSize(QtCore.QSize(30,30))
+        self.label_24 = QtWidgets.QLabel(self.pushButton__image)
+        self.label_24.setGeometry(QtCore.QRect(0, 0, 30, 30))
+        self.label_24.setMovie(self.movie2)
+        self.label_24.setText("")
+        self.label_24.setObjectName("label_24")
+        self.movie2.start()
+
+
+
+
 
         self.lineEdit = QtWidgets.QLineEdit(self.frame)
         self.lineEdit.setGeometry(QtCore.QRect(0, 600, 281, 31))
@@ -179,6 +192,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.radio1.setChecked(True)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
