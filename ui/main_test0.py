@@ -233,17 +233,17 @@ class Ui_MainWindow(object):
 
         self.frame2 = QtWidgets.QFrame(self.page_3)
         self.frame2.setGeometry(QtCore.QRect(0, 0, 920, 820))
-        self.frame2.setStyleSheet("background-color : #ffffff")
+        self.frame2.setStyleSheet("background-color : #000000")
         self.frame2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame2.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame2.setObjectName("intro_frame")
+        self.frame2.setObjectName("frame2")
 
 
 
-        self.webEngineView2 = QtWebEngineWidgets.QWebEngineView(self.frame2)
-        self.webEngineView2.setGeometry(QtCore.QRect(200, 120, 720, 700))
-        self.webEngineView2.setUrl(QtCore.QUrl("about:blank"))
-        self.webEngineView2.setObjectName("webEngineView2")
+        # self.webEngineView2 = QtWebEngineWidgets.QWebEngineView(self.frame2)
+        # self.webEngineView2.setGeometry(QtCore.QRect(200, 120, 720, 700))
+        # self.webEngineView2.setUrl(QtCore.QUrl("about:blank"))
+        # self.webEngineView2.setObjectName("webEngineView2")
 
         #stack1로 돌아가는 버튼
         self.pushButton__image2 = QtWidgets.QPushButton(self.frame2)

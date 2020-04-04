@@ -22,6 +22,10 @@ from PyQt5 import *
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import uuid
+
+
+from bb import *
+
 #https://doc.qt.io/qtforpython/PySide2/QtGui/QMouseEvent.html
 #https://www.riverbankcomputing.com/static/Docs/PyQt5/api/qtcore/qtcore-module.html
 class Umbrella(QMainWindow, Ui_MainWindow) :
@@ -56,6 +60,19 @@ class Umbrella(QMainWindow, Ui_MainWindow) :
         # self.webEngineView2.load(QUrl(self.dc.html_test()))
 
         self.initSignal()
+
+        self.tboard = Board(self.page_3)
+        self.tboard.msg2Statusbar.connect(self.test_1)
+        self.tboard.start()
+        self.setStyleSheet("background-color:#ffffff")
+        self.tboard.setGeometry(460,0,460,820)
+
+
+    def test_1(self, msg) :
+        if msg == "Game over" :
+            self.tboard.initBoard()
+            self.tboard.start()
+
 
     def initSignal(self) :
         #page 변환

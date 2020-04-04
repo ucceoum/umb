@@ -7,6 +7,7 @@
     <title>지도 생성하기</title>
 
 </head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <body>
 
 <div id="container">
@@ -32,6 +33,7 @@
 		<input type="hidden" id="tmp_value" />
 	</div>
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
 
@@ -40,16 +42,11 @@
 <script>
 
 
-
-
-
-
-
-
-
 var tmp_div = $("#tmp_div");
 var go_py_result = "";
 var go_py_result2 = "";
+var tmp_bool = false;
+var tmp_list = new Array();
 
 var center_lat = $('#center_lat');
 var center_lng = $('#center_lng');
@@ -62,6 +59,8 @@ var infowindowList = new Array();
 var infowindow = new kakao.maps.InfoWindow({
     content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
 });
+
+
 
 
 
