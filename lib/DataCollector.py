@@ -139,12 +139,20 @@ class DataCollector :
         img = soup.select("div.se_component.se_image.default > div > div > div > a >img")
         return img
 
+    def get_data_by_location(self) :
+        pass
+
+
+
+
+
+
 #"https://search.naver.com/search.naver?&where=news&query=%EB%A7%88%EC%8A%A4%ED%81%AC&sm=tab_pge&sort=0&photo=0&field=0&reporter_article=&pd=4&docid=&nso=so:r,p:1d,a:all&mynews=1&cluster_rank=116&refresh_start=0&start=1"
 
 
 if __name__ == "__main__" :
     dc = DataCollector()
-    rs = dc.get_confirmed_by_age()
+    rs = dc.get_rank_data()
     for i in rs :
         print(i, rs[i])
         print()
