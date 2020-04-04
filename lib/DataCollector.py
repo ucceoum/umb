@@ -132,6 +132,14 @@ class DataCollector :
             result[list_sex[i].text.strip()] = [cf,dd,cr]
         return result
 
+    def html_test(self) :
+        url = "https://terms.naver.com/entry.nhn?docId=5912275&cid=43667&categoryId=43667#TABLE_OF_CONTENT5"
+        res = req.urlopen(url).read()
+        soup = BeautifulSoup(res, "html.parser")
+        img = soup.select("div.se_component.se_image.default > div > div > div > a >img")
+        return img
+
+#"https://search.naver.com/search.naver?&where=news&query=%EB%A7%88%EC%8A%A4%ED%81%AC&sm=tab_pge&sort=0&photo=0&field=0&reporter_article=&pd=4&docid=&nso=so:r,p:1d,a:all&mynews=1&cluster_rank=116&refresh_start=0&start=1"
 
 
 if __name__ == "__main__" :

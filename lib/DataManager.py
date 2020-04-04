@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 class DataManager :
-    def __init__(self, parent) :
+    def __init__(self, parent=None) :
         self.main = parent
 
     def intro_graph(self, data):

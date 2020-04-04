@@ -17,7 +17,9 @@ class Runner :
         script = """
 
         infowindow"""+str(code)+""".open(map, marker"""+str(code)+""");
-        tmp_list.push("""+str(code)+""");
+        if(!tmp_list.includes("""+str(code)+""")){
+            tmp_list.push("""+str(code)+""");
+        }
         """
         self.main.page.runJavaScript(script)
 
@@ -35,7 +37,7 @@ class Runner :
 
     def search(self, search_text) :
         # search_text = self.lineEdit.text().strip()
-
+        self.main.remove_list()
         script = """
         tmp_bool = false;
 
@@ -341,6 +343,9 @@ class Runner :
             type = typeP[int(item.get('type'))]
             color = ""
             width = 45
+            blue = "https://cdn1.iconfinder.com/data/icons/social-messaging-ui-color/254000/66-128.png"
+            red = "https://cdn1.iconfinder.com/data/icons/color-bold-style/21/14_2-128.png"
+            orange = "https://cdn4.iconfinder.com/data/icons/iconsimple-places/512/pin_2-128.png"
             for i in name :
                 if i.isalpha() and not (i.isupper() or i.islower()) :
                     width += 20
@@ -349,11 +354,28 @@ class Runner :
 
             if remain_stat in remainP :
                 color = {remainP.index(remain_stat)<=1 : 'success', remainP.index(remain_stat)==2 :'warning'}.get(True, 'danger')
+                pin = {remainP.index(remain_stat)<=1 : blue, remainP.index(remain_stat)==2 :orange}.get(True, red)
+                pin_size = {remainP.index(remain_stat)<=1 : 50, remainP.index(remain_stat)==2 :28}.get(True, 30)
             else :
                 color = 'danger'
-
+                pin = red
+                pin_size = 30
 
             script = """
+
+
+            var imageSrc = '"""+red+"""', // 마커이미지의 주소입니다
+                imageSize = new kakao.maps.Size(40, 40), // 마커이미지의 크기입니다
+                imageOption = {offset: new kakao.maps.Point(20, 40)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+            // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+
+
+
+
+
 
             tmp_list = new Array();
             tmp_list.push(0);
@@ -361,6 +383,7 @@ class Runner :
 
             var marker"""+str(code)+""" = new kakao.maps.Marker({
                 position: markerPosition
+                //image : markerImage
             });
 
 

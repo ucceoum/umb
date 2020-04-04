@@ -37,6 +37,8 @@ class Umbrella(QMainWindow, Ui_MainWindow) :
         self.page = QWebEnginePage()
         self.page.setUrl(QUrl(self.url))
         self.page.setView(self.webEngineView)
+        # self.webEngineView2.load(QUrl("http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=1&brdGubun=11&ncvContSeq=&contSeq=&board_id=&gubun="))
+
         self.appLoaded = False
         chrome_option = Options()
         chrome_option.add_argument("--headless")
@@ -50,6 +52,9 @@ class Umbrella(QMainWindow, Ui_MainWindow) :
         self.itemList = []
         self.rowList = []
         self.dataChecker = 0
+
+        # self.webEngineView2.load(QUrl(self.dc.html_test()))
+
         self.initSignal()
 
     def initSignal(self) :
@@ -165,7 +170,7 @@ class Umbrella(QMainWindow, Ui_MainWindow) :
         self.runner.info_open(self.rowList[int(row.whatsThis())].code)
 
     def rowClicked(self, row) :
-
+        self.runner.info_close_all()
         self.runner.info_open(self.rowList[int(row.whatsThis())].code)
 
 

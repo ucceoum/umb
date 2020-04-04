@@ -209,7 +209,7 @@ class Ui_MainWindow(object):
         self.radio4.setGeometry(QtCore.QRect(830, 600, 81, 31))
         self.radio4.setObjectName("radio4")
         self.listWidget = QtWidgets.QListWidget(self.page_2)
-        self.listWidget.setGeometry(QtCore.QRect(0, 630, 921, 171))
+        self.listWidget.setGeometry(QtCore.QRect(0, 630, 921, 191))
         self.listWidget.setObjectName("listWidget")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -217,9 +217,9 @@ class Ui_MainWindow(object):
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.stackedWidget.addWidget(self.page_2)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        # self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        # self.statusbar.setObjectName("statusbar")
+        # MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
@@ -231,22 +231,24 @@ class Ui_MainWindow(object):
         self.page_3.setObjectName("page_3")
 
 
-        self.graph_frame = QtWidgets.QFrame(self.page_3)
-        self.graph_frame.setGeometry(QtCore.QRect(0, 0, 920, 820))
-        self.graph_frame.setStyleSheet("background-color : #ffffff")
-        self.graph_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.graph_frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.graph_frame.setObjectName("intro_frame")
-        self.stackedWidget.addWidget(self.page_3)
-        #stack1로 돌아가는 버튼
-        self.pushButton__image2 = QtWidgets.QPushButton(self.graph_frame)
-        self.pushButton__image2.setGeometry(QtCore.QRect(0, 0, 30, 30))
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("logo/umbrella.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton__image2.setIcon(icon)
-        self.pushButton__image2.setIconSize(QtCore.QSize(30, 30))
-        self.pushButton__image2.setObjectName("pushButton__image")
+        self.frame2 = QtWidgets.QFrame(self.page_3)
+        self.frame2.setGeometry(QtCore.QRect(0, 0, 920, 820))
+        self.frame2.setStyleSheet("background-color : #ffffff")
+        self.frame2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame2.setObjectName("intro_frame")
 
+
+
+        self.webEngineView2 = QtWebEngineWidgets.QWebEngineView(self.frame2)
+        self.webEngineView2.setGeometry(QtCore.QRect(200, 120, 720, 700))
+        self.webEngineView2.setUrl(QtCore.QUrl("about:blank"))
+        self.webEngineView2.setObjectName("webEngineView2")
+
+        #stack1로 돌아가는 버튼
+        self.pushButton__image2 = QtWidgets.QPushButton(self.frame2)
+        self.pushButton__image2.setGeometry(QtCore.QRect(0, 0, 30, 30))
+        self.pushButton__image2.setObjectName("pushButton__image")
         self.movie3=QMovie("logo/rolling_umb.gif")
         self.movie3.setScaledSize(QtCore.QSize(30,30))
         self.label_25 = QtWidgets.QLabel(self.pushButton__image2)
@@ -256,7 +258,7 @@ class Ui_MainWindow(object):
         self.label_25.setObjectName("label_24")
         self.movie3.start()
 
-
+        self.stackedWidget.addWidget(self.page_3)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
