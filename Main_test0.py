@@ -26,6 +26,7 @@ import uuid
 
 from bb import *
 
+
 #https://doc.qt.io/qtforpython/PySide2/QtGui/QMouseEvent.html
 #https://www.riverbankcomputing.com/static/Docs/PyQt5/api/qtcore/qtcore-module.html
 class Umbrella(QMainWindow, Ui_MainWindow) :
@@ -61,10 +62,11 @@ class Umbrella(QMainWindow, Ui_MainWindow) :
 
         self.initSignal()
 
+        #테트리스
         self.tboard = Board(self.page_3)
         self.tboard.msg2Statusbar.connect(self.test_1)
         self.tboard.start()
-        self.setStyleSheet("background-color:#ffffff")
+        self.tboard.setStyleSheet("background-color:#ffffff")
         self.tboard.setGeometry(460,0,460,820)
 
 

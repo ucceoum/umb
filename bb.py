@@ -41,8 +41,8 @@ class Board(QFrame):
 
     msg2Statusbar = pyqtSignal(str)
 
-    BoardWidth = 10
-    BoardHeight = 22
+    BoardWidth = 14
+    BoardHeight = 30
     Speed = 300
 
     def __init__(self, parent):
