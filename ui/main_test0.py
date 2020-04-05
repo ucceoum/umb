@@ -233,13 +233,18 @@ class Ui_MainWindow(object):
 
         self.frame2 = QtWidgets.QFrame(self.page_3)
         self.frame2.setGeometry(QtCore.QRect(0, 0, 920, 820))
-        self.frame2.setStyleSheet("background-color : #000000")
+        self.frame2.setStyleSheet("background-color : #ffffff")
         self.frame2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame2.setObjectName("frame2")
 
+        self.comboBox = QtWidgets.QComboBox(self.frame2)
+        self.comboBox.setGeometry(QtCore.QRect(29, 0, 201, 30))
+        self.comboBox.setObjectName("comboBox")
 
-
+        self.graph2 = QtWidgets.QWidget(self.frame2)
+        self.graph2.setGeometry(QtCore.QRect(0, 30, 920, 790))
+        self.graph2.setObjectName("graph2")
         # self.webEngineView2 = QtWebEngineWidgets.QWebEngineView(self.frame2)
         # self.webEngineView2.setGeometry(QtCore.QRect(200, 120, 720, 700))
         # self.webEngineView2.setUrl(QtCore.QUrl("about:blank"))

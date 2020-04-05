@@ -24,6 +24,9 @@ import requests
 
 #https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6
 
+
+#https://pomber.github.io/covid19/timeseries.json
+
 class DataCollector :
     def __init__(self,parent=None):
             self.main=parent
@@ -143,8 +146,32 @@ class DataCollector :
         pass
 
 
+    def get_timeseries(self) :
+        url = "https://pomber.github.io/covid19/timeseries.json"
+        result = json.loads(req.urlopen(url).read())
+        return result
 
+    def cut_timeseries(self, data, type=None) :
+        dateL = []
+        confirmedL = []
+        deathsL = []
+        recoveredL = []
 
+        for i in data :
+            dateL.append(i.get('date'))
+            confirmedL.append(i.get('confirmed'))
+            deathsL.append(i.get('deaths'))
+            recoveredL.append(i.get('recovered'))
+        if type==None :
+            return dateL, confirmedL, deathsL, recoveredL
+        elif type == 'date' :
+            return dateL
+        elif type == 'confirmed' :
+            return confirmedL
+        elif type == 'deaths' :
+            return deathsL
+        elif type == 'recovered' :
+            return recoveredL
 
 
 #"https://search.naver.com/search.naver?&where=news&query=%EB%A7%88%EC%8A%A4%ED%81%AC&sm=tab_pge&sort=0&photo=0&field=0&reporter_article=&pd=4&docid=&nso=so:r,p:1d,a:all&mynews=1&cluster_rank=116&refresh_start=0&start=1"
@@ -152,7 +179,7 @@ class DataCollector :
 
 if __name__ == "__main__" :
     dc = DataCollector()
-    rs = dc.get_rank_data()
+    rs = dc.get_timeseries().get("Korea, South")
     for i in rs :
-        print(i, rs[i])
+        print(i)
         print()

@@ -5,10 +5,51 @@ from matplotlib import font_manager, rc
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 import numpy as np
-
+import mplcursors
 class DataManager :
     def __init__(self, parent=None) :
         self.main = parent
+        self.lay=QHBoxLayout(self.main.graph2)
+    def cur_annotations(self, cur):
+        print("cur_anno")
+        cur.annotation.set_text(
+            f"confirmed(deaths) : {self.main.timeSeries.get(self.main.comboBox.currentText())[cur.target.index].get('confirmed') }({self.main.timeSeries.get(self.main.comboBox.currentText())[cur.target.index].get('deaths')})\n recovered : {self.main.timeSeries.get(self.main.comboBox.currentText())[cur.target.index].get('recovered')}")
+        cur.annotation.get_bbox_patch().set(fc="powderblue", alpha=0.9)
+
+
+    def graph_timeseries(self, data) :
+
+
+        # plt.clf()
+        # fig=plt.figure(figsize=(60, 6))
+        # fig, ax =plt.subplots(1,1)
+        fig=plt.figure()
+        dateL, confirmedL, deathsL, recoveredL = self.main.dc.cut_timeseries(data)
+        plt.bar(dateL, confirmedL, label='confirmed')
+        plt.bar(dateL, deathsL, label='deaths')
+        r = plt.plot(dateL, recoveredL,'g-', label='recovered')
+        plt.xticks([dateL[0],'2020-2-1','2020-3-1','2020-4-1'], [dateL[0],'2020-2-1','2020-3-1','2020-4-1'])
+
+
+        locs, labels = plt.xticks()
+        plt.setp(labels, rotation=-12)
+        # plt.setp(r, linewidth=3.0)
+        plt.legend()
+        self.cur = mplcursors.cursor(hover=True)
+        # self.cur.connect("add", self.cur_annotations)
+        # fig.canvas.mpl_connect('pick_event', self.cur_annotations)
+        # plt.bar([1,2,3],[5,5,5])
+        # plt.bar([1,2,3],[1,2,3])
+        # plt.show()
+        self.canvas=FigureCanvas(fig)
+        self.canvas.draw()
+
+        self.lay.takeAt(0)
+        # self.lay.removeWidget(self.lay.itemAt(0))
+        self.lay.insertWidget(0, self.canvas)
+        # canvas.show()
+        pass
+
 
     def intro_graph(self, data):
         # data=[]

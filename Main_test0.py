@@ -61,13 +61,19 @@ class Umbrella(QMainWindow, Ui_MainWindow) :
         # self.webEngineView2.load(QUrl(self.dc.html_test()))
 
         self.initSignal()
+        self.timeSeries = self.dc.get_timeseries()
+        self.comboBox.addItem("-----")
+        for i in sorted(self.timeSeries.keys()) :
+            self.comboBox.addItem(i)
+
+        # self.dm.graph_timeseries(self.dc.get_timeseries().get("Korea, South"))
 
         #테트리스
-        self.tboard = Board(self.page_3)
-        self.tboard.msg2Statusbar.connect(self.test_1)
-        self.tboard.start()
-        self.tboard.setStyleSheet("background-color:#ffffff")
-        self.tboard.setGeometry(460,0,460,820)
+        # self.tboard = Board(self.page_3)
+        # self.tboard.msg2Statusbar.connect(self.test_1)
+        # self.tboard.start()
+        # self.tboard.setStyleSheet("background-color:#ffffff")
+        # self.tboard.setGeometry(460,0,460,820)
 
 
     def test_1(self, msg) :
@@ -106,8 +112,11 @@ class Umbrella(QMainWindow, Ui_MainWindow) :
         self.widget_3.pressed.connect(self.view_graph)
         self.widget_4.pressed.connect(self.view_graph)
 
+        self.comboBox.currentTextChanged.connect(self.show_timeSeries)
 
-
+    def show_timeSeries(self, nat) :
+        if nat in self.timeSeries.keys() :
+            self.dm.graph_timeseries(self.timeSeries.get(nat))
 
     def view_graph(self) :
         self.stackedWidget.setCurrentIndex(2)
