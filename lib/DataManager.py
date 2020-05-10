@@ -58,7 +58,7 @@ class DataManager :
         e=data[4]
         g=data[6]
 
-        font_name = font_manager.FontProperties(fname="c:/Windows/fonts/YTTE08.TTF").get_name()
+        font_name = font_manager.FontProperties(fname="c:/Windows/fonts/H2HDRM.TTF").get_name()
         rc('font', family=font_name)
         labels = ('확진환자', '완치자', '치료중', '사망자') ## 라벨
         xs = [a,c,e,g] ## 값들, pie 차트에서 알아서 100% 기준으로 변경해서 정리해줌
