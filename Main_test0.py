@@ -65,7 +65,6 @@ class Umbrella(QMainWindow, Ui_MainWindow) :
         for i in sorted(self.timeSeries.keys()) :
             self.comboBox.addItem(i)
 
-        # self.dm.graph_timeseries(self.dc.get_timeseries().get("Korea, South"))
 
         #테트리스
         # self.tboard = Board(self.page_3)
