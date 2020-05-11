@@ -251,7 +251,10 @@ class Runner :
         #         return result.split()[0], result.split()[1]
         #         run=False
         print("lat lng : ", result.split()[0], result.split()[1])
-        return result.split()[0], result.split()[1]
+        try :
+            return result.split()[0], result.split()[1]
+        except :
+            return "", ""
 
 
 
