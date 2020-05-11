@@ -23,6 +23,7 @@ class DataManager :
         # plt.clf()
         # fig=plt.figure(figsize=(60, 6))
         # fig, ax =plt.subplots(1,1)
+        plt.clf()
         fig=plt.figure()
         dateL, confirmedL, deathsL, recoveredL = self.main.dc.cut_timeseries(data)
         plt.bar(dateL, confirmedL, label='confirmed')
