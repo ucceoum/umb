@@ -36,7 +36,7 @@ class Umbrella(QMainWindow, Ui_MainWindow) :
         self.init_my_location()
         self.setupUi(self)  # 초기화
         # self.url = "http://192.168.0.3:8080/umbrella"
-        self.url = "https://sambank.net/umbrella.html"
+        self.url = "http://localhost:8080/umbrella.html"
         self.webEngineView.load(QUrl(self.url))
         self.page = QWebEnginePage()
         self.page.setUrl(QUrl(self.url))
@@ -159,7 +159,7 @@ class Umbrella(QMainWindow, Ui_MainWindow) :
         self.my_location_lng = str(my_location.get('location').get('lng'))
 
     def setButton(self) :
-        if self.page.url().toString().strip().startswith("https://sambank.net/umbrella") :
+        if self.page.url().toString().strip().startswith("http://localhost:8080/umbrella") :
             self.pushButton2.setText("판매처 탐색")
         else :
             self.pushButton2.setText("지도 새로고침")

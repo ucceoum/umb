@@ -213,7 +213,11 @@ class Runner :
         $.ajax({
             type : 'POST',
             url : '/umbrella/save_center',
-            data :{'center_lat' : map.getCenter().getLat(),'center_lng' : map.getCenter().getLng(), 'user_uuid' : '"""+str(self.main.user_uuid)+"""'}
+            async : false,
+            data :{'center_lat' : map.getCenter().getLat(),'center_lng' : map.getCenter().getLng(), 'user_uuid' : '"""+str(self.main.user_uuid)+"""'},
+            success : {
+
+            }
         });
         """
 
@@ -227,24 +231,27 @@ class Runner :
             type : 'POST',
             url : '/umbrella/get_center',
             data : {'user_uuid' : '"""+str(self.main.user_uuid)+"""'},
+            async: false,
             success : function(data_center){
                 go_py_result2 = data_center;
             }
 
 
         });
+        return go_py_result2
         """
 
-        self.main.browser.execute_script(script2)
+        result = self.main.browser.execute_script(script2)
 
-        run=True
-        while run :
-            self.main.browser.execute_script(script2)
-            result = self.main.browser.execute_script("return go_py_result2")
-            if result != "" and result != None:
-                return result.split()[0], result.split()[1]
-                run=False
-
+        # run=True
+        # while run :
+        #     self.main.browser.execute_script(script2)
+        #     result = self.main.browser.execute_script("return go_py_result2")
+        #     if result != "" and result != None:
+        #         return result.split()[0], result.split()[1]
+        #         run=False
+        print("lat lng : ", result.split()[0], result.split()[1])
+        return result.split()[0], result.split()[1]
 
 
 
@@ -255,7 +262,11 @@ class Runner :
         $.ajax({
             type : 'POST',
             url : '/umbrella/save_level',
-            data :{'level' : map.getLevel(),'user_uuid' : '"""+str(self.main.user_uuid)+"""'}
+            async : false,
+            data :{'level' : map.getLevel(),'user_uuid' : '"""+str(self.main.user_uuid)+"""'},
+            success : {
+
+            }
         });
         """
         self.main.page.runJavaScript(script)
@@ -264,22 +275,24 @@ class Runner :
             type : 'POST',
             url : '/umbrella/get_level',
             data : {'user_uuid' : '"""+str(self.main.user_uuid)+"""'},
+            async : false,
             success : function(data_level){
                 go_py_result = data_level;
             }
         });
-        """
-        self.main.browser.execute_script(script2)
-        script3 = """
         return go_py_result
         """
-        # for i in range(500) :
-        while True :
-            self.main.browser.execute_script(script2)
-            result = self.main.browser.execute_script(script3)
-            if result != '' :
-                return result
-                break
+        result = self.main.browser.execute_script(script2)
+        # script3 = """
+        # return go_py_result
+        # """
+        # # for i in range(500) :
+        # while True :
+        #     self.main.browser.execute_script(script2)
+        #     result = self.main.browser.execute_script(script3)
+        #     if result != '' :
+        #         return result
+        #         break
 
         return result
 
