@@ -250,8 +250,9 @@ class Runner :
         #     if result != "" and result != None:
         #         return result.split()[0], result.split()[1]
         #         run=False
-        print("lat lng : ", result.split()[0], result.split()[1])
+
         try :
+            print("lat lng : ", result.split()[0], result.split()[1])
             return result.split()[0], result.split()[1]
         except :
             return "", ""
